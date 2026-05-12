@@ -636,8 +636,52 @@ async function loadData() {
 
 renderPontuacoes();
 renderRegulamento();
+//START
+const DADOS_PLACAR = {individual:[],times:[],updated_at:""};
+//END
+
+// usa dados injetados pelo n8n se existirem, senão usa mock
+function loadData() {
+  try {
+    if (DADOS_PLACAR.individual.length > 0) {
+      renderIndividual(DADOS_PLACAR.individual);
+      renderTimes(DADOS_PLACAR.times);
+      const dt = DADOS_PLACAR.updated_at ? new Date(DADOS_PLACAR.updated_at) : new Date();
+      document.getElementById('update-label').textContent =
+        'Atualizado ' + dt.toLocaleDateString('pt-BR') + ' às ' + dt.toLocaleTimeString('pt-BR', {hour:'2-digit',minute:'2-digit'});
+    } else {
+      renderIndividual([
+        {name:"Adriana Ribeiro",group:"ADM 1",score:47},
+        {name:"Aline Makiyama",group:"Beta",score:43},
+        {name:"Rafael Souza",group:"Alpha",score:41},
+        {name:"Fernanda Lima",group:"Marketing",score:38},
+        {name:"Bruno Carvalho",group:"Tec 1",score:35},
+        {name:"Camila Nunes",group:"Gamma",score:32},
+        {name:"Diego Matos",group:"Comercial",score:29},
+        {name:"Juliana Costa",group:"Epsilon",score:27},
+        {name:"Lucas Ferreira",group:"Mu",score:24},
+        {name:"Mariana Torres",group:"Iota",score:21},
+      ]);
+      renderTimes([
+        {name:"Alpha",members:8,score:210},
+        {name:"Beta",members:7,score:195},
+        {name:"Tec 1",members:9,score:188},
+        {name:"Gamma",members:6,score:174},
+        {name:"Mu",members:8,score:163},
+        {name:"Comercial",members:5,score:155},
+        {name:"Marketing",members:4,score:142},
+        {name:"ADM 1",members:6,score:138},
+        {name:"Epsilon",members:5,score:127},
+        {name:"Iota",members:6,score:115},
+      ]);
+      document.getElementById('update-label').textContent = 'Dados de exemplo';
+    }
+  } catch(e) {
+    console.error(e);
+  }
+}
+
 loadData();
-setInterval(loadData, 5 * 60 * 1000);
 </script>
 </body>
 </html>
