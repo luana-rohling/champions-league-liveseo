@@ -215,33 +215,60 @@
   .r-bar { height: 100%; border-radius: 3px; background: linear-gradient(90deg, var(--gold), var(--gold-bright)); }
   .r-score { font-family: var(--display); font-size: 1.5rem; color: var(--gold); text-align: right; line-height: 1; }
 
-  /* ════════ TIMES ════════ */
-  .teams-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-  .team-card {
-    display: flex; align-items: center; gap: 13px;
-    padding: 14px 16px; border: 1px solid var(--line); border-radius: 8px;
+  /* ════════ TIMES — BAR CHART RACE ════════ */
+  .race { display: flex; flex-direction: column; gap: 9px; }
+  .lane {
+    display: grid; grid-template-columns: 40px 150px 1fr 56px;
+    align-items: center; gap: 12px;
+    padding: 9px 14px; border: 1px solid var(--line); border-radius: 9px;
     background: linear-gradient(180deg, var(--surface2), var(--surface));
-    position: relative; overflow: hidden; transition: border-color 0.18s, transform 0.18s;
+    position: relative; overflow: hidden; transition: border-color 0.18s;
   }
-  .team-card:hover { border-color: #3a3a3a; transform: translateY(-2px); }
-  .team-card.top1 { border-color: rgba(240,165,0,0.45); }
-  .team-card.top1::after { content:''; position:absolute; inset:0; background: radial-gradient(circle at 0% 0%, rgba(240,165,0,0.1), transparent 60%); pointer-events:none; }
-  .team-pos { font-family: var(--display); font-size: 2.1rem; line-height: 1; min-width: 34px; color: var(--muted); }
-  .team-card.top1 .team-pos { color: var(--gold); }
-  .team-card.top2 .team-pos { color: var(--silver); }
-  .team-card.top3 .team-pos { color: var(--bronze); }
-  .team-badge {
-    width: 40px; height: 40px; border-radius: 9px; flex-shrink: 0;
-    display: flex; align-items: center; justify-content: center;
-    font-family: var(--cond); font-size: 13px; font-weight: 700;
-    background: #1c1c1c; letter-spacing: 0.02em;
+  .lane:hover { border-color: #3a3a3a; }
+  .lane.top1 { border-color: rgba(240,165,0,0.5); box-shadow: inset 0 0 24px rgba(240,165,0,0.07); }
+  .lane.top1::after { content:''; position:absolute; inset:0; background: radial-gradient(circle at 0% 50%, rgba(240,165,0,0.12), transparent 55%); pointer-events:none; }
+  .lane-pos { font-family: var(--display); font-size: 2rem; line-height: 1; color: var(--muted); text-align: center; }
+  .lane.top1 .lane-pos { color: var(--gold); }
+  .lane.top2 .lane-pos { color: var(--silver); }
+  .lane.top3 .lane-pos { color: var(--bronze); }
+  .lane-id { min-width: 0; }
+  .lane-name { font-family: var(--cond); font-weight: 600; font-size: 15px; line-height: 1.1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .lane-members { font-size: 11px; color: var(--muted); letter-spacing: 0.03em; }
+
+  /* a pista */
+  .track {
+    position: relative; height: 30px; border-radius: 16px;
+    background:
+      repeating-linear-gradient(90deg, transparent 0 22px, rgba(255,255,255,0.04) 22px 24px),
+      #141414;
+    overflow: visible;
+    border: 1px solid #1f1f1f;
   }
-  .team-info { flex: 1; min-width: 0; }
-  .team-name { font-family: var(--cond); font-weight: 600; font-size: 15px; }
-  .team-members { font-size: 11px; color: var(--muted); letter-spacing: 0.03em; }
-  .team-bar-wrap { height: 4px; background: #1c1c1c; border-radius: 2px; margin-top: 7px; overflow: hidden; }
-  .team-bar { height: 100%; border-radius: 2px; background: linear-gradient(90deg, var(--gold), var(--gold-bright)); }
-  .team-score { font-family: var(--display); font-size: 1.9rem; color: var(--gold); line-height: 1; }
+  /* linha de chegada */
+  .track::after {
+    content: ''; position: absolute; top: 3px; bottom: 3px; right: 5px; width: 7px;
+    background-image: repeating-linear-gradient(45deg, #555 0 3px, #222 3px 6px);
+    border-radius: 2px; opacity: 0.55;
+  }
+  .runner {
+    position: absolute; top: 2px; bottom: 2px; left: 0; width: 0;
+    border-radius: 14px;
+    background: linear-gradient(90deg, rgba(240,165,0,0.25), var(--gold) 85%);
+    transition: width 1.1s cubic-bezier(.22,.61,.36,1);
+    display: flex; align-items: center; justify-content: flex-end;
+  }
+  .lane.top1 .runner { background: linear-gradient(90deg, rgba(255,200,61,0.3), var(--gold-bright) 85%); box-shadow: 0 0 14px rgba(240,165,0,0.5); }
+  .lane:not(.top1) .runner { opacity: 0.92; }
+  .lane.top2 .runner { background: linear-gradient(90deg, rgba(196,196,196,0.2), var(--silver) 90%); }
+  .lane.top3 .runner { background: linear-gradient(90deg, rgba(205,127,50,0.2), var(--bronze) 90%); }
+  /* capacete na ponta */
+  .helmet {
+    width: 26px; height: 26px; margin-right: 2px; flex-shrink: 0;
+    filter: drop-shadow(0 1px 3px rgba(0,0,0,0.6));
+  }
+  .lane-score { font-family: var(--display); font-size: 1.9rem; color: var(--gold); line-height: 1; text-align: right; }
+  .lane.top2 .lane-score { color: #d8d8d8; }
+  .lane.top3 .lane-score { color: var(--bronze); }
 
   /* ════════ PONTUAÇÕES ════════ */
   .pts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
@@ -279,7 +306,10 @@
     .spot-1 .ath-avatar { width: 56px; height: 56px; font-size: 19px; }
     .ath-avatar { width: 44px; height: 44px; font-size: 15px; }
     .ath-name { font-size: 12px; }
-    .teams-grid, .pts-grid, .reg-contacts { grid-template-columns: 1fr; }
+    .pts-grid, .reg-contacts { grid-template-columns: 1fr; }
+    .lane { grid-template-columns: 30px 1fr 44px; gap: 8px; padding: 8px 11px; }
+    .lane .track { grid-column: 1 / -1; margin-top: 2px; }
+    .lane-name { font-size: 13px; }
     .standings-head, .row { grid-template-columns: 36px 1fr 50px; }
     .standings-head .h-prog, .row .r-bar-wrap { display: none; }
   }
@@ -325,7 +355,7 @@
 
   <section id="panel-times" class="panel">
     <p class="section-label">Classificação por time</p>
-    <div id="teams-grid" class="teams-grid"></div>
+    <div id="race" class="race"></div>
   </section>
 
   <section id="panel-pontuacoes" class="panel">
@@ -446,24 +476,53 @@ function renderStandings(data){
   }).join('');
 }
 
+const HELMET_SVG = `<svg class="helmet" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="16" cy="16" r="11" fill="#e8e8e8"/>
+  <circle cx="16" cy="16" r="11" fill="none" stroke="#b8b8b8" stroke-width="1.5"/>
+  <path d="M16 7.5c-4.7 0-8.5 3.8-8.5 8.5 0 1.6.4 3.1 1.2 4.4 1.3-2.8 4.4-6.2 9.6-7.4 2-.5 3.4-1.9 3.8-3.6A8.46 8.46 0 0 0 16 7.5Z" fill="#fff" opacity="0.5"/>
+  <path d="M10 16.5c0-3.3 2.7-6 6-6s6 2.7 6 6c0 1.2-.4 2.4-1 3.3-.5.7-1.3 1.2-2.2 1.2h-5.6c-.9 0-1.7-.5-2.2-1.2-.6-.9-1-2.1-1-3.3Z" fill="#1a2a4a"/>
+  <path d="M10.5 15c.6-2.4 2.8-4 5.5-4s4.9 1.6 5.5 4c-1.5-.8-3.4-1.3-5.5-1.3s-4 .5-5.5 1.3Z" fill="#5a7fc0" opacity="0.7"/>
+  <rect x="5.5" y="14.5" width="2.5" height="3.5" rx="1.2" fill="#c8c8c8"/>
+  <rect x="24" y="14.5" width="2.5" height="3.5" rx="1.2" fill="#c8c8c8"/>
+  <circle cx="13" cy="6.5" r="1.4" fill="var(--gold)"/>
+</svg>`;
+
+let _timesData = null, _raceAnimated = false;
+
 function renderTimes(data){
-  const max = data[0]?.score || 1;
-  document.getElementById('teams-grid').innerHTML = data.slice(0,10).map((t,i) => {
+  _timesData = data.slice(0,10);
+  const max = _timesData[0]?.score || 1;
+  document.getElementById('race').innerHTML = _timesData.map((t,i) => {
     const c = COLORS[i % COLORS.length];
-    const pct = Math.round((t.score/max)*100);
     const top = i<3 ? ' top'+(i+1) : '';
     const nome = titleCase(t.name);
-    return `<div class="team-card${top}">
-      <div class="team-pos">${i+1}</div>
-      <div class="team-badge" style="color:${c.text}">${nome.slice(0,3).toUpperCase()}</div>
-      <div class="team-info">
-        <div class="team-name">${nome}</div>
-        <div class="team-members">${t.members} membros</div>
-        <div class="team-bar-wrap"><div class="team-bar" style="width:${pct}%"></div></div>
+    return `<div class="lane${top}">
+      <div class="lane-pos">${i+1}</div>
+      <div class="lane-id">
+        <div class="lane-name" style="color:${i<3?'':c.text}">${nome}</div>
+        <div class="lane-members">${t.members} membros</div>
       </div>
-      <div class="team-score">${t.score}</div>
+      <div class="track"><div class="runner" data-pct="${Math.round((t.score/max)*100)}">${HELMET_SVG}</div></div>
+      <div class="lane-score">${t.score}</div>
     </div>`;
   }).join('');
+  // se a aba ja estiver visivel, anima; senao espera o switch
+  if (document.getElementById('panel-times').classList.contains('active')) {
+    requestAnimationFrame(runRace);
+  }
+}
+
+function runRace(){
+  const runners = document.querySelectorAll('#race .runner');
+  runners.forEach((r, i) => {
+    const pct = r.getAttribute('data-pct');
+    setTimeout(() => { r.style.width = pct + '%'; }, 80 * i);
+  });
+  _raceAnimated = true;
+}
+function resetRace(){
+  document.querySelectorAll('#race .runner').forEach(r => r.style.width = '0');
+  _raceAnimated = false;
 }
 
 function switchTab(tab, btn){
@@ -471,6 +530,10 @@ function switchTab(tab, btn){
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
   btn.classList.add('active');
   document.getElementById('panel-'+tab).classList.add('active');
+  if (tab === 'times') {
+    resetRace();
+    requestAnimationFrame(() => requestAnimationFrame(runRace));
+  }
 }
 
 const PONTUACOES = [
@@ -500,7 +563,7 @@ const PONTUACOES = [
 
 const REGULAMENTO = [
   {title:"1. Estrutura do programa", items:[
-    "Gamificação de <strong>junho a dezembro de 2026</strong>.",
+    "Gamificação de <strong>maio a dezembro de 2026</strong>.",
     "Pontos individuais somados dentro de grupos formados por sorteio.",
     "Grupos divididos por equipe, com no máximo 8 pessoas cada.",
     "Os <strong>3 grupos com maiores pontuações</strong> serão premiados com prêmios surpresa.",
