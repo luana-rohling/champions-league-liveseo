@@ -300,18 +300,82 @@
   .footer { margin-top: 2.5rem; padding-top: 1.25rem; border-top: 1px solid var(--line); }
   .footer-text { font-family: var(--cond); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #383838; }
 
-  @media(max-width: 600px) {
-    .header-title { font-size: 2rem; }
-    .arena { gap: 8px; padding: 0; }
-    .spot-1 .ath-avatar { width: 56px; height: 56px; font-size: 19px; }
-    .ath-avatar { width: 44px; height: 44px; font-size: 15px; }
-    .ath-name { font-size: 12px; }
-    .pts-grid, .reg-contacts { grid-template-columns: 1fr; }
-    .lane { grid-template-columns: 30px 1fr 44px; gap: 8px; padding: 8px 11px; }
-    .lane .track { grid-column: 1 / -1; margin-top: 2px; }
+  /* ════════ RESPONSIVO ════════ */
+
+  /* Tablet / telas médias */
+  @media (max-width: 860px) {
+    .page { padding: 1.75rem 1.1rem 3rem; }
+    .header-title { font-size: 2.2rem; }
+    .spot-1 .podium-block { height: 110px; }
+    .spot-2 .podium-block { height: 82px; }
+    .spot-3 .podium-block { height: 62px; }
+    .spot-1 .podium-rank { font-size: 4.4rem; }
+    .spot-2 .podium-rank { font-size: 3.4rem; }
+    .spot-3 .podium-rank { font-size: 2.8rem; }
+    .pts-grid { grid-template-columns: 1fr; }
+  }
+
+  /* Permite rolagem horizontal das abas se não couberem */
+  @media (max-width: 640px) {
+    .tabs { overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+    .tabs::-webkit-scrollbar { display: none; }
+    .tab { padding: 11px 15px 13px; white-space: nowrap; flex-shrink: 0; font-size: 13px; }
+  }
+
+  /* Celular */
+  @media (max-width: 600px) {
+    .page { padding: 1.5rem 0.9rem 2.5rem; }
+    .header { gap: 0.75rem; }
+    .logo { width: 48px; height: 48px; }
+    .header-title { font-size: 1.9rem; }
+    .header-sub { font-size: 10px; letter-spacing: 0.16em; }
+    .header-right { width: 100%; margin-left: 0; text-align: left; margin-top: 4px; }
+    .header { flex-wrap: wrap; }
+
+    .arena { gap: 6px; padding: 0; }
+    .crown { font-size: 17px; }
+    .ath-avatar { width: 42px; height: 42px; font-size: 14px; border-width: 1.5px; }
+    .spot-1 .ath-avatar { width: 54px; height: 54px; font-size: 18px; }
+    .ath-name { font-size: 11.5px; max-width: 100%; }
+    .ath-team { font-size: 10px; }
+    .ath-score { font-size: 1.5rem; }
+    .ath-score-lbl { font-size: 8px; }
+    .spot-1 .podium-block { height: 92px; }
+    .spot-2 .podium-block { height: 68px; }
+    .spot-3 .podium-block { height: 52px; }
+    .spot-1 .podium-rank { font-size: 3.6rem; padding-top: 14px; }
+    .spot-2 .podium-rank { font-size: 2.8rem; padding-top: 12px; }
+    .spot-3 .podium-rank { font-size: 2.3rem; padding-top: 10px; }
+
+    .reg-contacts { grid-template-columns: 1fr; }
+
+    /* corrida: pista vai pra linha de baixo, ocupando largura toda */
+    .lane { grid-template-columns: 30px 1fr 46px; gap: 9px; padding: 9px 11px; }
+    .lane-pos { grid-column: 1; grid-row: 1; }
+    .lane-id { grid-column: 2; grid-row: 1; }
+    .lane-score { grid-column: 3; grid-row: 1; }
+    .lane .track { grid-column: 1 / -1; grid-row: 2; margin-top: 3px; height: 26px; }
     .lane-name { font-size: 13px; }
-    .standings-head, .row { grid-template-columns: 36px 1fr 50px; }
+    .lane-pos { font-size: 1.7rem; }
+    .lane-score { font-size: 1.6rem; }
+    .helmet { width: 22px; height: 22px; }
+
+    /* classificacao: esconde barra de progresso, mantem #, nome, pts */
+    .standings-head, .row { grid-template-columns: 34px 1fr 48px; gap: 10px; }
     .standings-head .h-prog, .row .r-bar-wrap { display: none; }
+    .r-name { font-size: 13px; }
+  }
+
+  /* Celular estreito */
+  @media (max-width: 380px) {
+    .header-title { font-size: 1.7rem; }
+    .tab { padding: 10px 12px 12px; font-size: 12px; }
+    .ath-avatar { width: 38px; height: 38px; font-size: 13px; }
+    .spot-1 .ath-avatar { width: 48px; height: 48px; font-size: 16px; }
+    .ath-name { font-size: 10.5px; }
+    .ath-score { font-size: 1.3rem; }
+    .lane { grid-template-columns: 26px 1fr 42px; gap: 7px; padding: 8px 9px; }
+    .pts-label { font-size: 12px; }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -623,8 +687,38 @@ function renderRegulamento(){
 }
 
 //START
-const DADOS_PLACAR = {"individual":[{"name":"Vanessa Panont","group":"ADM 2","score":40},{"name":"LUIZA CALHEIROS MARINHO","group":"Tec 1","score":40},{"name":"HELOISE PIRES DA SILVA","group":"Gamma","score":20},{"name":"ARIANE GUANINI DA SILVA","group":"Beta","score":20},{"name":"PYETRO RODRIGUES GOMES","group":"Delta","score":15},{"name":"MAYELE MARCHI","group":"Mu","score":15},{"name":"MICHELE MIEKO YAMADA","group":"ADM 2","score":15},{"name":"Eduardo Santos Vilas Boas","group":"ADM 2","score":10},{"name":"MARCELA PAUKA SANTANA","group":"ADM 2","score":10},{"name":"ARIESKA ANGELICA MEURER","group":"ADM 1","score":10}],"times":[{"name":"ADM 2","members":5,"score":80},{"name":"Tec 1","members":5,"score":70},{"name":"Gamma","members":5,"score":45},{"name":"ADM 1","members":4,"score":30},{"name":"Lider Operação","members":3,"score":30},{"name":"Mu","members":3,"score":30},{"name":"Epsilon","members":4,"score":25},{"name":"Beta","members":2,"score":25},{"name":"Alpha","members":4,"score":25},{"name":"Delta","members":2,"score":20}],"updated_at":"2026-06-25T18:59:43.156Z"};
+const DADOS_PLACAR = {"individual":[{"name":"LUIZA CALHEIROS MARINHO","group":"Tec 1","score":40},{"name":"HELOISE PIRES DA SILVA","group":"Gamma","score":20},{"name":"VANESSA PANONT","group":"ADM 2","score":20},{"name":"ARIANE GUANINI DA SILVA","group":"Beta","score":20},{"name":"Vanessa Panont","group":"ADM 2","score":10},{"name":"Eduardo Santos Vilas Boas","group":"ADM 2","score":10},{"name":"MARCELA PAUKA SANTANA","group":"ADM 2","score":10},{"name":"ARIESKA ANGELICA MEURER","group":"ADM 1","score":10},{"name":"EZEQUIEL DE OLIVEIRA GUEDES","group":"Lider Operação","score":10},{"name":"EMILLY SARAGIOTO LEITE","group":"Epsilon","score":10}],"times":[{"name":"ADM 2","members":5,"score":60},{"name":"Tec 1","members":3,"score":60},{"name":"Gamma","members":2,"score":30},{"name":"Lider Operação","members":3,"score":30},{"name":"ADM 1","members":2,"score":20},{"name":"Beta","members":1,"score":20},{"name":"Mu","members":2,"score":20},{"name":"Epsilon","members":1,"score":10},{"name":"Delta","members":1,"score":10},{"name":"Tec 2","members":1,"score":10}],"updated_at":"2026-06-24T17:36:27.455Z"};
 //END
+
+// chave de identidade: nome sem acento, sem pontuacao, minusculo e com espacos normalizados
+function idChave(nome){
+  return String(nome).normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+    .replace(/[^A-Za-z ]/g,' ').toLowerCase().replace(/\s+/g,' ').trim();
+}
+// soma pontos de entradas repetidas da mesma pessoa/time (ignora maiusc/acentos)
+// mantem a grafia mais completa do nome e o grupo da entrada de maior score
+function consolidar(lista){
+  const mapa = new Map();
+  for (const item of lista){
+    const k = idChave(item.name);
+    if (!mapa.has(k)){
+      mapa.set(k, Object.assign({}, item));
+    } else {
+      const acc = mapa.get(k);
+      acc.score += item.score;
+      // nome: fica com a versao que tem mais palavras (mais completa)
+      const np = String(item.name).trim().split(/\s+/).length;
+      const ap = String(acc.name).trim().split(/\s+/).length;
+      if (np > ap) acc.name = item.name;
+      // grupo/membros: mantem o do registro original de maior score individual
+      if (item.score > (acc._maxUnit || 0)){ acc._maxUnit = item.score; if (item.group) acc.group = item.group; }
+    }
+  }
+  const out = Array.from(mapa.values());
+  out.forEach(o => { delete o._maxUnit; });
+  out.sort((a,b) => b.score - a.score);
+  return out;
+}
 
 function loadData(){
   try {
@@ -646,6 +740,8 @@ function loadData(){
         {name:"Iota",members:6,score:115},
       ];
     }
+    ind = consolidar(ind);
+    tim = consolidar(tim);
     renderArena(ind);
     renderStandings(ind);
     renderTimes(tim);
